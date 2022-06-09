@@ -9,7 +9,10 @@ import LocationList from './LocationList'
 import LineBreak from './LineBreak'
 import Footer from './Footer'
 
-const HeroInfo = ({ item, onClick }) => {
+const HeroInfo = ({ item, onClick, itemList }) => {
+  const evolutionFrom = () => (item.evolution.evolutionTree.filter(ele => (ele.stage === item.evolution.stage - 1))[0])
+  const evolutionTo = () => (item.evolution.evolutionTree.filter(ele => (ele.stage === item.evolution.stage + 1))[0])
+
   return (
     <div className='flex flex-col justify-center items-center my-10'>
         <HeroHeader 
@@ -49,10 +52,14 @@ const HeroInfo = ({ item, onClick }) => {
             />
           </div>
           <div className="flex justify-center items-center">
-            <h1 className='font-bold mr-2'>{item.evolution.evolves ? item.evolution.evolutionTree[1].name : 'Does not evolve'}</h1>
-            { item.evolution.evolves && <HeroImage 
+            <h1 className='font-bold mr-2'>
+              {item.evolution.evolves && item.evolution.stage < item.evolution.evolutionTree.length - 1
+                ? evolutionTo().name
+                : 'Does not evolve'}
+            </h1>
+            { item.evolution.evolves && item.evolution.stage < item.evolution.evolutionTree.length - 1 && <HeroImage 
               size='3'
-              hero={item.portraitWikiUrl}
+              hero={itemList[evolutionTo().number - 1].portraitWikiUrl}
             /> }
           </div>
           <div className="flex items-center">
@@ -64,11 +71,13 @@ const HeroInfo = ({ item, onClick }) => {
           </div>
           <div className="flex justify-center items-center">
             <h1 className='font-bold mr-2'>
-              {item.evolution.evolves ? item.evolution.evolutionTree[0].name  : 'Does not evolve'}
+              {item.evolution.evolves && item.evolution.stage > 0
+                ? evolutionFrom().name
+                : 'None'}
             </h1>
-            { item.evolution.evolves && <HeroImage 
+            { item.evolution.evolves && item.evolution.stage > 0 && <HeroImage 
               size='3'
-              hero={item.portraitWikiUrl}
+              hero={itemList[evolutionFrom().number - 1].portraitWikiUrl}
             /> }
           </div>
         </div>

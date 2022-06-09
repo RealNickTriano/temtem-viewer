@@ -39,6 +39,7 @@ function App() {
       { !isLoading && 
         <HeroInfo 
         item={tem}
+        itemList={items}
         onClick={changeTem}
       /> }
       

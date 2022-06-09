@@ -9,7 +9,7 @@ const LocationList = ({ places }) => {
 
   return (
     <ul className='mt-3'>
-      {listItems}
+      { listItems.length > 0 ? listItems : <li className='font-bold text-center hover:font-semibold hover:cursor-pointer'>Must Evolve</li>}
     </ul>
   )
 }
