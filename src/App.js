@@ -1,6 +1,7 @@
 import HeroInfo from "./components/HeroInfo";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from 'react';
+import Footer from "./components/Footer";
 
 function App() {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
@@ -34,7 +35,7 @@ function App() {
   }
   
   return (
-    <div className="App">
+    <div>
       <Navbar />
       { !isLoading && 
         <HeroInfo 
@@ -42,7 +43,7 @@ function App() {
         itemList={items}
         onClick={changeTem}
       /> }
-      
+      <Footer />
     </div>
   );
 }
