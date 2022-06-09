@@ -1,8 +1,8 @@
 import React from 'react'
 
 const LocationList = ({ places }) => {
-    const listItems = places.map((place) => 
-        <li className='font-bold text-center hover:font-semibold hover:cursor-pointer'>
+    const listItems = places.map((place, index) => 
+        <li key={index} className='font-bold text-center hover:font-semibold hover:cursor-pointer'>
             {place}
         </li>
     )

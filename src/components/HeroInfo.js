@@ -9,19 +9,23 @@ import LocationList from './LocationList'
 import LineBreak from './LineBreak'
 import Footer from './Footer'
 
-const HeroInfo = () => {
+const HeroInfo = ({ item, onClick }) => {
   return (
     <div className='flex flex-col justify-center items-center my-10'>
         <HeroHeader 
-          name='Temtem Name'
+          name={item.name}
         />
         <HeroNumber 
-          number='001'
+          number={item.number}
+          onClick={onClick}
         />
         <HeroImage 
           size='8'
+          hero={item.portraitWikiUrl}
         />
-        <ButtonRow />
+        <ButtonRow 
+          currentTem={item}
+        />
         <SubHeader 
           text='Types & Evolutions'
         />
@@ -34,8 +38,8 @@ const HeroInfo = () => {
             />
           </div>
           <div className="flex justify-center items-center">
-            <h1 className='font-bold mr-2'>Water</h1>
-            <h1 className='font-bold mr-2'>Toxic</h1>
+            <h1 className='font-bold mr-2'>{item.types[0]}</h1>
+            <h1 className='font-bold mr-2'>{item.types[1]}</h1>
           </div>
           <div className="flex items-center">
             <Label 
@@ -45,10 +49,11 @@ const HeroInfo = () => {
             />
           </div>
           <div className="flex justify-center items-center">
-            <h1 className='font-bold mr-2'>Platox</h1>
-            <HeroImage 
+            <h1 className='font-bold mr-2'>{item.evolution.evolves ? item.evolution.evolutionTree[1].name : 'Does not evolve'}</h1>
+            { item.evolution.evolves && <HeroImage 
               size='3'
-            />
+              hero={item.portraitWikiUrl}
+            /> }
           </div>
           <div className="flex items-center">
             <Label 
@@ -58,10 +63,13 @@ const HeroInfo = () => {
             />
           </div>
           <div className="flex justify-center items-center">
-            <h1 className='font-bold mr-2'>Platox</h1>
-            <HeroImage 
+            <h1 className='font-bold mr-2'>
+              {item.evolution.evolves ? item.evolution.evolutionTree[0].name  : 'Does not evolve'}
+            </h1>
+            { item.evolution.evolves && <HeroImage 
               size='3'
-            />
+              hero={item.portraitWikiUrl}
+            /> }
           </div>
         </div>
         <SubHeader 
@@ -79,17 +87,21 @@ const HeroInfo = () => {
             gridCol='1'
           />
           <div className="flex justify-center items-center">
-            <h1 className='font-bold'>85cm / 33.46"</h1>
+            <h1 className='font-bold'>
+              {item.details.height.cm}cm / {item.details.height.inches}"
+            </h1>
           </div>
           <div className="flex justify-center items-center">
-            <h1 className='font-bold'>48kg / 105.84lbs</h1>
+            <h1 className='font-bold'>
+              {item.details.weight.kg}kg / {item.details.weight.lbs}lbs
+            </h1>
           </div>
         </div>
         <SubHeader 
           text='Places to Catch'
         />
         <LocationList
-          places={['Gifted Bridges', 'Test']}
+          places={item.locations.map(loc => (loc.location))}
         />
         <LineBreak />
         <Footer />
