@@ -3,7 +3,11 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'footer-texture': "url('./images/banner.jpg')"
+      }
+    },
   },
   plugins: [],
 }
