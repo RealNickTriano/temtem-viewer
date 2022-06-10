@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import { useState, useEffect } from 'react';
 import Footer from "./components/Footer";
 import AllList from "./components/AllList";
+import SubHeader from "./components/SubHeader";
+import LocationList from "./components/LocationList";
 
 function App() {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
@@ -45,6 +47,16 @@ function App() {
         itemList={items}
         onClick={changeTem}
       /> }
+      <div className="flex flex-col mt-10">
+        <div className="w-44 mx-auto">
+          <SubHeader 
+            text='Places to Catch'
+          />
+        </div>
+        <LocationList
+          places={tem.locations.map(loc => (loc.location))}
+        />
+      </div>
 
         <AllList 
           itemList={items}

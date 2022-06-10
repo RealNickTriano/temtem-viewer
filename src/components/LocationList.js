@@ -8,9 +8,16 @@ const LocationList = ({ places }) => {
     )
 
   return (
-    <ul className='mt-3'>
-      { listItems.length > 0 ? listItems : <li className='font-bold text-center hover:font-semibold hover:cursor-pointer'>Must Evolve</li>}
-    </ul>
+    <>
+      {places.length < 6 ? 
+      <ul className='mt-3'>
+        { listItems.length > 0 ? listItems : <li className='font-bold text-center hover:font-semibold hover:cursor-pointer'>Must Evolve</li>}
+      </ul>
+      :
+      <ul className='mt-3 grid w-1/4 grid-cols-2 mx-auto justify-items-center'>
+        { listItems.length > 0 ? listItems : <li className='font-bold hover:font-semibold hover:cursor-pointer'>Must Evolve</li>}
+      </ul>}
+    </>
   )
 }
 

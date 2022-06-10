@@ -3,18 +3,25 @@ import HeroImage from './HeroImage'
 
 const TemLineItem = ({ item }) => {
   return (
-    <div class="table-row">
-        <div class="table-cell">
-            <HeroImage 
-                size='4'
-                hero={item.portraitWikiUrl}
-            />
-        </div>
-        <div class="table-cell">{item.name}</div>
-        <div class="table-cell">{item.number}</div>
-        <div class="table-cell"d>{item.types[0]} {item.types[1]}</div>
-        <div class="table-cell">{item.name}</div>
-    </div>
+    <tr className="border-b-2 border-fuchsia-800 text-center">
+      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex justify-center items-center">
+        <HeroImage 
+          size='4'
+          hero={item.portraitWikiUrl}
+        />
+      </td>
+      <td class="text-md text-gray-900 font-medium px-6 whitespace-nowrap">
+        {item.name}
+      </td>
+      <td class="text-md text-gray-900 font-medium px-6 whitespace-nowrap">
+      #{item.number < 10 ? `00${item.number}`
+                  : item.number < 100 ? `0${item.number}`
+                  : item.number}
+      </td>
+      <td class="text-md text-gray-900 font-medium px-6 whitespace-nowrap">
+        {item.types[0]} {item.types[1]}
+      </td>
+    </tr>
   )
 }
 

@@ -119,12 +119,6 @@ const HeroInfo = ({ item, onClick, itemList }) => {
               </h1>
             </div>
           </div>
-          <SubHeader 
-            text='Places to Catch'
-          />
-          <LocationList
-            places={item.locations.map(loc => (loc.location))}
-          />
           <LineBreak />
            
       </div>
