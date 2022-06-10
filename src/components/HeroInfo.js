@@ -5,18 +5,17 @@ import HeroImage from './HeroImage'
 import HeroNumber from './HeroNumber'
 import SubHeader from './SubHeader'
 import Label from './Label'
-import LocationList from './LocationList'
 import LineBreak from './LineBreak'
-import Footer from './Footer'
 import HeroAnimated from './HeroAnimated'
 import { useState } from 'react'
 import LeftControl from './LeftControl'
 import RightControl from './RightControl'
 
-const HeroInfo = ({ item, onClick, itemList }) => {
+const HeroInfo = ({ item, onClick, itemList, handleLuma, luma }) => {
   const evolutionFrom = () => (item.evolution.evolutionTree.filter(ele => (ele.stage === item.evolution.stage - 1))[0])
   const evolutionTo = () => (item.evolution.evolutionTree.filter(ele => (ele.stage === item.evolution.stage + 1))[0])
   const heroAnimatedRender = `https://temtem-api.mael.tech${item.renderAnimatedImage}`
+  const heroLumaAnimatedRender = `https://temtem-api.mael.tech${item.renderAnimatedLumaImage}`
 
   const [error, setError] = useState(false);
 
@@ -37,10 +36,12 @@ const HeroInfo = ({ item, onClick, itemList }) => {
           />
           <HeroImage 
             size='8'
-            hero={item.portraitWikiUrl}
+            hero={!luma ? item.portraitWikiUrl : item.lumaWikiPortraitUrlLarge}
           />
           <ButtonRow 
             currentTem={item}
+            handleLuma={handleLuma}
+            luma={luma}
           />
           <SubHeader 
             text='Types & Evolutions'
@@ -126,7 +127,7 @@ const HeroInfo = ({ item, onClick, itemList }) => {
       <HeroAnimated 
         error={error}
         setError={setError}
-        image={heroAnimatedRender}
+        image={!luma ? heroAnimatedRender : heroLumaAnimatedRender}
       /> : <h1 className='font-bold text-2xl'>No Animated Render Found</h1>}
 
       <RightControl

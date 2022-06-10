@@ -12,6 +12,7 @@ function App() {
   const [tem, setTem] = useState({});
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [luma, setLuma] = useState(false);
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -31,6 +32,10 @@ function App() {
     fetchItems();
   }, [])
 
+  const handleLuma = (bool) => {
+    setLuma(bool);
+  }
+
   const changeTem = (number) => {
     console.log(number);
     console.log(items[number - 1]);
@@ -46,6 +51,8 @@ function App() {
         item={tem}
         itemList={items}
         onClick={changeTem}
+        handleLuma={handleLuma}
+        luma={luma}
       /> }
       <div className="flex flex-col mt-10">
         <div className="w-44 mx-auto">
@@ -54,7 +61,7 @@ function App() {
           />
         </div>
         <LocationList
-          places={tem.locations.map(loc => (loc.location))}
+          places={tem.locations && tem.locations.map(loc => (loc.location))}
         />
       </div>
 
