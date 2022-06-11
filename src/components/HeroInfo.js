@@ -11,10 +11,10 @@ import { useState } from 'react'
 import LeftControl from './LeftControl'
 import RightControl from './RightControl'
 
-const HeroInfo = ({ item, onClick, itemList, handleLuma, luma }) => {
+const HeroInfo = ({ item, onClick, itemList, handleLuma, luma, render }) => {
   const evolutionFrom = () => (item.evolution.evolutionTree.filter(ele => (ele.stage === item.evolution.stage - 1))[0])
   const evolutionTo = () => (item.evolution.evolutionTree.filter(ele => (ele.stage === item.evolution.stage + 1))[0])
-  const heroAnimatedRender = `https://temtem-api.mael.tech${item.renderAnimatedImage}`
+  const heroAnimatedRender =  `https://temtem-api.mael.tech${item.renderAnimatedImage}`
   const heroLumaAnimatedRender = `https://temtem-api.mael.tech${item.renderAnimatedLumaImage}`
 
   const [error, setError] = useState(false);
@@ -123,10 +123,11 @@ const HeroInfo = ({ item, onClick, itemList, handleLuma, luma }) => {
           <LineBreak />
            
       </div>
-      {item.wikiRenderAnimatedUrl ? 
+      {true ? //item.wikiRenderAnimatedUrl ?
       <HeroAnimated 
         error={error}
         setError={setError}
+        render={render}
         image={!luma ? heroAnimatedRender : heroLumaAnimatedRender}
       /> : <h1 className='font-bold text-2xl'>No Animated Render Found</h1>}
 

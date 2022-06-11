@@ -1,7 +1,6 @@
 import React from 'react'
-import { useState } from 'react'
 
-const HeroAnimated = ({ image, error, setError }) => {
+const HeroAnimated = ({ image, error, setError, render }) => {
     
 
   return (

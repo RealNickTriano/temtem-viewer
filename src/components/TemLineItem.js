@@ -1,9 +1,11 @@
 import React from 'react'
 import HeroImage from './HeroImage'
 
-const TemLineItem = ({ item }) => {
+const TemLineItem = ({ item, number, handleListClick }) => {
   return (
-    <tr className="border-b-2 border-fuchsia-800 text-center">
+    <tr 
+    onClick={() => handleListClick(number)}
+    className="border-b-2 border-fuchsia-800 text-center hover:bg-blue-100 hover:cursor-pointer">
       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex justify-center items-center">
         <HeroImage 
           size='4'
