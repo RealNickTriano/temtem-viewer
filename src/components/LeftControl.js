@@ -2,7 +2,7 @@ import React from 'react'
 import { FaChevronLeft } from 'react-icons/fa'
 
 
-const LeftControl = ({ number, onClick, setError }) => {
+const LeftControl = ({ number, onClick, setError, size }) => {
   return (
     <>
     <button
@@ -11,7 +11,7 @@ const LeftControl = ({ number, onClick, setError }) => {
         number === 1 ? onClick(164) : onClick(number - 1);
         setError(false);
         }}
-    ><FaChevronLeft size={70} /></button>
+    ><FaChevronLeft size={size} /></button>
     </>
   )
 }

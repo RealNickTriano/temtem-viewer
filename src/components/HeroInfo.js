@@ -25,6 +25,7 @@ const HeroInfo = ({ item, onClick, itemList, handleLuma, luma, render }) => {
         onClick={onClick}
         setError={setError}
         number={item.number}
+        size={70}
       />
 
       <div className='flex flex-col justify-center items-center border-4 rounded-lg p-4 border-fuchsia-900 -skew-y-6 shadow-[-15px_15px_20px_rgba(0,0,0,0.15)] shadow-gray-700 row-span-1 col-start-2 col-end-3'>
@@ -135,6 +136,7 @@ const HeroInfo = ({ item, onClick, itemList, handleLuma, luma, render }) => {
         onClick={onClick}
         setError={setError}
         number={item.number}
+        size={70}
       />
     </div>
   )

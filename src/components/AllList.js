@@ -1,9 +1,10 @@
 import React from 'react'
 import TemLineItem from './TemLineItem'
+import PageNav from './PageNav'
 
 const AllList = ({ itemList, handleListClick }) => {
   return (
-    <div className='flex flex-col w-1/2 mx-auto mt-20'>
+    <div className='flex flex-col w-1/2 mx-auto mt-20 border-4 border-fuchsia-800 rounded-3xl px-14 pb-6'>
         <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
@@ -38,6 +39,8 @@ const AllList = ({ itemList, handleListClick }) => {
                 </div>
             </div>
         </div>
+        {/*Pagination*/}
+        <PageNav />
     </div>
   )
 }
