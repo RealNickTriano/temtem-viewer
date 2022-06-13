@@ -1,11 +1,13 @@
 import React from 'react'
 import TemLineItem from './TemLineItem'
 import PageNav from './PageNav'
+import { useState } from 'react'
 
-const AllList = ({ itemList, handleListClick }) => {
+const AllList = ({ itemList, handleListClick, pages, currentPage, setCurrentPage}) => {
+
   return (
-    <div className='flex flex-col w-1/2 mx-auto mt-20 border-4 border-fuchsia-800 rounded-3xl px-14 pb-6'>
-        <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div className='flex flex-col w-1/2 mx-auto mt-8 border-4 border-fuchsia-800 rounded-3xl px-14 pb-6'>
+        <div className="overflow-x-hidden sm:-mx-6 lg:-mx-8">
             <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
                     <table className="min-w-full">
@@ -20,13 +22,13 @@ const AllList = ({ itemList, handleListClick }) => {
                             <th scope="col" className="font-bold text-gray-900 px-6 py-4 text-center">
                                 Number
                             </th>
-                            <th scope="col" className="font-bold text-gray-900 px-6 py-4 text-center">
+                            <th scope="col" className="font-bold text-gray-900 px-6 py-4 text-center lg:invisible xl:visible">
                                 Type
                             </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {itemList.map(item => 
+                            {pages[currentPage].map(item => 
                                 <TemLineItem
                                     key={item.number} 
                                     number={item.number}
@@ -40,7 +42,12 @@ const AllList = ({ itemList, handleListClick }) => {
             </div>
         </div>
         {/*Pagination*/}
-        <PageNav />
+        <PageNav 
+            itemList={itemList}
+            pages={pages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+        />
     </div>
   )
 }

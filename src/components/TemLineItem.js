@@ -20,7 +20,7 @@ const TemLineItem = ({ item, number, handleListClick }) => {
                   : item.number < 100 ? `0${item.number}`
                   : item.number}
       </td>
-      <td className="text-md text-gray-900 font-medium px-6">
+      <td className="text-md text-gray-900 font-medium px-6 lg:invisible xl:visible">
         {item.types[0]} {item.types[1]}
       </td>
     </tr>
