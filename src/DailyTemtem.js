@@ -4,19 +4,23 @@ import Navbar from './components/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import CommentForm from './components/CommentForm'
 import Comment from './components/Comment'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ShowMore from './components/ShowMore'
 
 const DailyTemtem = () => {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
+  const MY_API_URL = 'http://localhost:3001/api/';
 
   const [comment, setNewComment] = useState({});
   const [displayNewComment, setDisplayNewComment] = useState(false);
   const [time, setTime] = useState({});
   const [tem, setTem] = useState({});
+  const [comments, setComments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // timer
   const setTimeDifference = () => {
-    const hoursDifference = 20 - new Date().getHours();
+    const hoursDifference = 21 - new Date().getHours();
     const minutesDifference = 60 - new Date().getMinutes();
     const secondsDifference = 60 - new Date().getSeconds();
 
@@ -28,6 +32,24 @@ const DailyTemtem = () => {
   }
 
   setInterval(setTimeDifference, 1000);
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const response = await fetch(`${MY_API_URL}comments/`);
+        if (!response.ok) throw Error('Did not recieve expected data');
+        const listItems = await response.json();
+        setComments(listItems);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchComments();
+
+  }, [])
 
   const changeTem = () => {
     if(time.hours === 0 && time.minutes === 0 && time.seconds === 0)
@@ -94,9 +116,18 @@ const DailyTemtem = () => {
 
           { displayNewComment && <CommentForm /> }
 
-          <Comment />
-          {/** display show more if comments > 5 */}
-          <ShowMore />
+          {comments.map(item => (
+            <Comment 
+              key={item._id}
+              name={item.name}
+              comment={item.comment}
+              time={item.time}
+              likes={item.likes}
+              dislikes={item.dislikes}
+            />
+          ))}
+          { comments.length > 5 && <ShowMore /> }
+          
 
         </div>
 
