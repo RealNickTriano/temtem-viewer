@@ -12,7 +12,7 @@ const Comment = ({ name, comment, time, likes, dislikes }) => {
     const hourDifference = currentDate.getHours() - hours;
     const minuteDifference = currentDate.getMinutes() - minutes;
     const secondDifference = currentDate.getSeconds() - seconds;
-
+    
     const displayTime = () => {
         if(hourDifference > 0)
         {
@@ -23,6 +23,7 @@ const Comment = ({ name, comment, time, likes, dislikes }) => {
             return `${secondDifference}sec ago`
         }
     }
+
   return (
     <div className='my-6 border-4 border-fuchsia-800 rounded-xl p-4 w-1/2'>
         <div className="flex justify-start items-center gap-5">

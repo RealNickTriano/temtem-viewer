@@ -6,6 +6,7 @@ import CommentForm from './components/CommentForm'
 import Comment from './components/Comment'
 import { useState, useEffect } from 'react'
 import ShowMore from './components/ShowMore'
+import Alert from './components/Alert'
 
 const DailyTemtem = () => {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
@@ -17,6 +18,8 @@ const DailyTemtem = () => {
   const [tem, setTem] = useState({});
   const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alert, setAlert] = useState('');
 
   // timer
   const setTimeDifference = () => {
@@ -33,22 +36,22 @@ const DailyTemtem = () => {
 
   setInterval(setTimeDifference, 1000);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(`${MY_API_URL}comments/`);
-        if (!response.ok) throw Error('Did not recieve expected data');
-        const listItems = await response.json();
-        setComments(listItems);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`${MY_API_URL}comments/`);
+      if (!response.ok) throw Error('Did not recieve expected data');
+      const listItems = await response.json();
+      listItems.sort((a, b) => (a.time < b.time) ? 1 : -1);
+      setComments(listItems);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  }
 
+  useEffect(() => {
     fetchComments();
-
   }, [])
 
   const changeTem = () => {
@@ -110,11 +113,25 @@ const DailyTemtem = () => {
             <h1 className= 'text-gray-500 ml-2'>Add to Discussion</h1>
           </div>
 
+          {showAlert && 
+            <Alert 
+              text={alert}
+            />
+          }
+          
+
 
           {/** Make comment component, fetch all comments map through display component for each */}
 
 
-          { displayNewComment && <CommentForm /> }
+          { displayNewComment && 
+            <CommentForm 
+              setShowAlert={setShowAlert}
+              setAlert={setAlert}
+              setDisplayNewComment={setDisplayNewComment}
+              fetchComments={fetchComments}
+            /> 
+          }
 
           {comments.map(item => (
             <Comment 

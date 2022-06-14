@@ -1,10 +1,35 @@
 import React from 'react'
 import { useState } from 'react'
 
-const CommentForm = ({}) => {
+const CommentForm = ({ setAlert, setShowAlert, setDisplayNewComment, fetchComments }) => {
+    const MY_API_URL = 'http://localhost:3001/api/';
+
     const [message, setMessage] = useState('');
     const [userName, setUserName] = useState('');
-    const [comment, setComment] = useState({});
+    const [postRes, setPostRes] = useState({});
+
+    const makePost = async () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                name: userName,
+                comment: message,
+                time: new Date(),
+                dislikes: 0,
+                likes: 0 
+            })
+        };
+        try {
+            const response = await fetch(`${MY_API_URL}comments/`, requestOptions);
+            
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setDisplayNewComment(false);
+            fetchComments();
+        }
+    }
 
   return (
     <div className='my-6 border-4 border-fuchsia-800 rounded-xl p-4 w-1/2'>
@@ -16,12 +41,19 @@ const CommentForm = ({}) => {
             onSubmit={(e) => {
                 e.preventDefault();
                 {/**Just post here dont need to set */}
-                setComment(
-                    {
-                        userName: userName,
-                        message: message
-                    }
-                )}}
+                if (message === '')
+                {
+                    setAlert('Must enter comment');
+                    setShowAlert(true);
+                    setTimeout(() => {
+                        setShowAlert(false);
+                    }, 3000);
+                }
+                else {
+                    makePost();
+                }
+                
+            }}
         >
             <input 
                 className='focus:outline-none bg-white my-4'
@@ -35,9 +67,14 @@ const CommentForm = ({}) => {
             <div 
                 className='focus:outline-none bg-white w-full overflow-hidden resize-none'
                 contentEditable
+                suppressContentEditableWarning={true}
                 value={message}
                 onKeyUp={(e) => setMessage(e.target.innerText)}
             >Write your comment here...</div>
+            <button 
+                className='text-lg text-fuchsia-800 font-bold'
+            >Post
+            </button>
         </form>
     </div>
   )
