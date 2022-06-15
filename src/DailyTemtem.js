@@ -141,13 +141,14 @@ const DailyTemtem = () => {
               time={item.time}
               likes={item.likes}
               dislikes={item.dislikes}
+              id={item.id}
+              fetchComments={fetchComments}
             />
           ))}
           { comments.length > 5 && <ShowMore /> }
           
 
         </div>
-
 
         <Footer />
     </div>

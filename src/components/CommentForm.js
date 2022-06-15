@@ -13,6 +13,7 @@ const CommentForm = ({ setAlert, setShowAlert, setDisplayNewComment, fetchCommen
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
+                id: new Date().getTime(),
                 name: userName,
                 comment: message,
                 time: new Date(),
