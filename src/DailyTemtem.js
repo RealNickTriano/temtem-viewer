@@ -7,34 +7,20 @@ import Comment from './components/Comment'
 import { useState, useEffect } from 'react'
 import ShowMore from './components/ShowMore'
 import Alert from './components/Alert'
+import CountdownTimer from './components/CountdownTimer'
 
 const DailyTemtem = () => {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
   const MY_API_URL = 'http://localhost:3001/api/';
 
-  const [comment, setNewComment] = useState({});
   const [displayNewComment, setDisplayNewComment] = useState(false);
-  const [time, setTime] = useState({});
   const [tem, setTem] = useState({});
   const [comments, setComments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
   const [alert, setAlert] = useState('');
-
-  // timer
-  const setTimeDifference = () => {
-    const hoursDifference = 21 - new Date().getHours();
-    const minutesDifference = 60 - new Date().getMinutes();
-    const secondsDifference = 60 - new Date().getSeconds();
-
-    setTime({
-      hours: hoursDifference,
-      minutes: minutesDifference,
-      seconds: secondsDifference
-    })
-  }
-
-  setInterval(setTimeDifference, 1000);
+  const [targetDate, setTargetDate] = useState(new Date(2022,5,17,12,33,0))
+  const [guess, setGuess] = useState('');
+  const [guessCorrect, setGuessCorrect] = useState('')
 
   const fetchComments = async () => {
     try {
@@ -46,7 +32,6 @@ const DailyTemtem = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      setIsLoading(false);
     }
   }
 
@@ -54,55 +39,83 @@ const DailyTemtem = () => {
     fetchComments();
   }, [])
 
-  const changeTem = () => {
-    if(time.hours === 0 && time.minutes === 0 && time.seconds === 0)
-    {
-      const fetchItems = async () => {
-        try {
-          const response = await fetch(API_URL);
-          if (!response.ok) throw Error('Did not recieve expected data');
-          const listItems = await response.json();
-          setTem(listItems[Math.floor(Math.random * listItems.length)]);
-        } catch (error) {
-          console.error(error);
-        } finally {
-
-        }
-
-        fetchItems();
+  const changeTem = async () => {
+      const newTargetDate = targetDate.getTime() + 24 * 60 * 60 * 1000;
+      setTargetDate(newTargetDate);
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) throw Error('Did not recieve expected data');
+        const listItems = await response.json();
+        const newTem = listItems[Math.floor(Math.random() * listItems.length)]
+        setTem(newTem);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        
       }
-    }
+
   }
 
-  setInterval(changeTem, 1000);
+  const handleGuess = (e) => {
+    e.preventDefault();
+    if (guess.toLowerCase() === tem.name.toLowerCase())
+    {
+      //guess is correct
+      setGuessCorrect('correct');
+    } else {
+      //guess is wrong
+      setGuessCorrect('wrong');
+    }
+  }
 
   return (
     <div>
         <Navbar />
 
-        <div className='flex flex-col justify-center items-center'> 
+        <div className='flex flex-col justify-start items-center min-h-screen'> 
           <h1 className='font-bold text-3xl text-center mt-16 border-b-2 border-fuchsia-800'>Daily Temtem</h1>
-          <div className='flex justify-center items-center mt-12 blur-lg'>
-            <img className='w-[8rem] z-0' src='https://static.wikia.nocookie.net/temtem_gamepedia_en/images/e/e2/Mimit_full_render.png/' alt="hero" />
-          </div>
+          {guessCorrect !== 'correct' ? <div className='flex justify-center items-center mt-12 blur-md'>
+            <img className='w-[8rem] z-0' src={tem.wikiPortraitUrlLarge} alt="hero" />
+          </div> 
+          : <div className='flex justify-center items-center mt-12'>
+              <img className='w-[8rem] z-0' src={tem.wikiPortraitUrlLarge} alt="hero" />
+            </div> }
           <p className='font-medium w-96 mt-16 text-center'>
-            _____ has the honor of being the very first Digital ever 
-            created. The genomic reservoir contained in its tail allows it 
-            an unequalled ability to replicate any other Temtem species, 
-            making it the ultimate breeder.
+            Description
           </p>
+          
+          {guessCorrect === 'correct' && 
+            <Alert 
+              text={'Correct!'}
+              color='lightgreen'
+              textColor={'green'}
+            />
+          }
 
-          <form 
-            className='mt-16 focus-within:border-none'
-            onSubmit={(e) => e.preventDefault()}>
+          {guessCorrect === 'wrong' && 
+            <Alert 
+              text={'Try Again!'}
+              color='lightred'
+              textColor={'red'}
+            />
+          }
+
+          {guessCorrect !== 'correct' && <form 
+            className='mt-8 focus-within:border-none'
+            onSubmit={(e) => handleGuess(e)}>
             <input 
+              value={guess}
+              onChange={(e) => setGuess(e.target.value)}
               className='border-b-2 border-fuchsia-800 placeholder:text-fuchsia-900 text-fuchsia-900 focus:outline-none'
               type="text" 
               placeholder='Submit your guess...' />
-          </form>
+          </form>}
 
-          <h1 className='text-xl font-bold mt-5'>New Temtem in {time.hours}:{time.minutes}:{time.seconds > 9 ? time.seconds : `0${time.seconds}`}</h1>
-
+          <h1 className='text-xl font-bold mt-5'>New Temtem in </h1>
+          <CountdownTimer 
+            targetDate={targetDate}
+            actionOnEnd={changeTem}
+          />
 
           <h1 className='font-bold text-2xl text-center border-b-2 mt-16 mb-4 border-fuchsia-800'>Discussion</h1>
           <div 
