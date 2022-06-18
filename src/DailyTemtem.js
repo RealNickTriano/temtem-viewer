@@ -18,7 +18,7 @@ const DailyTemtem = () => {
   const [comments, setComments] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alert, setAlert] = useState('');
-  const [targetDate, setTargetDate] = useState(new Date(2022,5,17,12,33,0))
+  const [targetDate, setTargetDate] = useState(new Date(2022,5,18,14,33,0))
   const [guess, setGuess] = useState('');
   const [guessCorrect, setGuessCorrect] = useState('')
 
@@ -37,16 +37,14 @@ const DailyTemtem = () => {
 
   useEffect(() => {
     fetchComments();
+    changeTem();
   }, [])
 
   const changeTem = async () => {
-      const newTargetDate = targetDate.getTime() + 24 * 60 * 60 * 1000;
-      setTargetDate(newTargetDate);
       try {
-        const response = await fetch(API_URL);
+        const response = await fetch(`${MY_API_URL}dailytemtem/`);
         if (!response.ok) throw Error('Did not recieve expected data');
-        const listItems = await response.json();
-        const newTem = listItems[Math.floor(Math.random() * listItems.length)]
+        const newTem = await response.json();
         setTem(newTem);
       } catch (error) {
         console.error(error);
@@ -55,6 +53,10 @@ const DailyTemtem = () => {
       }
 
   }
+   const handleNewTime = () => {
+      const newTargetDate = targetDate.getTime() + 24 * 60 * 60 * 1000;
+      setTargetDate(newTargetDate);
+   }
 
   const handleGuess = (e) => {
     e.preventDefault();
@@ -114,7 +116,8 @@ const DailyTemtem = () => {
           <h1 className='text-xl font-bold mt-5'>New Temtem in </h1>
           <CountdownTimer 
             targetDate={targetDate}
-            actionOnEnd={changeTem}
+            changeTem={changeTem}
+            handleNewTime={handleNewTime}
           />
 
           <h1 className='font-bold text-2xl text-center border-b-2 mt-16 mb-4 border-fuchsia-800'>Discussion</h1>
