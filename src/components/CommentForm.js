@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 
 const CommentForm = ({ setAlert, setShowAlert, setDisplayNewComment, fetchComments }) => {
-    const MY_API_URL = 'http://localhost:3001/api/';
+    const MY_API_URL = 'https://temtem-helper-api.herokuapp.com/api/';
 
     const [message, setMessage] = useState('');
     const [userName, setUserName] = useState('');

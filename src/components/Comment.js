@@ -3,7 +3,7 @@ import { FaThumbsUp, FaThumbsDown } from "react-icons/fa"
 
 const Comment = ({ name, comment, time, likes, dislikes, id, fetchComments }) => {
     const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    const API_URL = 'http://localhost:3001/api/comments/'
+    const API_URL = 'https://temtem-helper-api.herokuapp.com/api/'
 
     const date = new Date(time);
     const seconds = date.getSeconds();
