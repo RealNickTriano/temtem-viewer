@@ -11,14 +11,14 @@ import CountdownTimer from './components/CountdownTimer'
 
 const DailyTemtem = () => {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
-  const MY_API_URL = 'http://localhost:3001/api/';
+  const MY_API_URL = 'https://temtem-helper-api.herokuapp.com/api/';
 
   const [displayNewComment, setDisplayNewComment] = useState(false);
   const [tem, setTem] = useState({});
   const [comments, setComments] = useState([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alert, setAlert] = useState('');
-  const [targetDate, setTargetDate] = useState(new Date(2022,5,18,14,33,0))
+  const [targetDate, setTargetDate] = useState(new Date(2022,5,21,21,0,0))
   const [guess, setGuess] = useState('');
   const [guessCorrect, setGuessCorrect] = useState('')
 
@@ -83,7 +83,7 @@ const DailyTemtem = () => {
               <img className='w-[8rem] z-0' src={tem.wikiPortraitUrlLarge} alt="hero" />
             </div> }
           <p className='font-medium w-96 mt-16 text-center'>
-            Description
+            {(tem.trivia && tem.trivia.length) > 0 ? tem.trivia[0] : 'No description available'}
           </p>
           
           {guessCorrect === 'correct' && 
@@ -161,7 +161,7 @@ const DailyTemtem = () => {
               fetchComments={fetchComments}
             />
           ))}
-          { comments.length > 5 && <ShowMore /> }
+          { (comments && comments.length) > 5 && <ShowMore /> }
           
 
         </div>
