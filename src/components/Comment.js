@@ -27,7 +27,7 @@ const Comment = ({ name, comment, time, likes, dislikes, id, fetchComments }) =>
 
     const updateLikes = async (myId, newLikes, newDislikes) => {
         try {
-          const response = await fetch(`${API_URL}`, {
+          const response = await fetch(`${API_URL}/comments/`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
