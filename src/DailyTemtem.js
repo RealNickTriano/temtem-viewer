@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import ShowMore from './components/ShowMore'
 import Alert from './components/Alert'
 import CountdownTimer from './components/CountdownTimer'
+import Timer from './components/Timer'
 
 const DailyTemtem = () => {
   const API_URL = 'https://temtem-api.mael.tech/api/temtems';
@@ -114,11 +115,7 @@ const DailyTemtem = () => {
           </form>}
 
           <h1 className='text-xl font-bold mt-5'>New Temtem in </h1>
-          <CountdownTimer 
-            targetDate={targetDate}
-            changeTem={changeTem}
-            handleNewTime={handleNewTime}
-          />
+          <Timer />
 
           <h1 className='font-bold text-2xl text-center border-b-2 mt-16 mb-4 border-fuchsia-800'>Discussion</h1>
           <div 
