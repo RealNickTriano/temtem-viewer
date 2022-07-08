@@ -67,18 +67,18 @@ function App() {
     <div>
       <Navbar />
 
-      { !isLoading && 
-        <HeroInfo 
-        item={tem}
-        itemList={items}
-        onClick={changeTem}
-        handleLuma={handleLuma}
-        luma={luma}
-        setError={setError}
-        error={error}
-      /> }
+        { !isLoading && 
+          <HeroInfo 
+          item={tem}
+          itemList={items}
+          onClick={changeTem}
+          handleLuma={handleLuma}
+          luma={luma}
+          setError={setError}
+          error={error}
+        /> }
 
-      <div className="flex flex-col mt-10">
+      <div className="flex flex-col mt-10 h-[10vh]">
         <div className="w-44 mx-auto">
           <SubHeader 
             text='Places to Catch'

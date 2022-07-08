@@ -18,14 +18,14 @@ const HeroInfo = ({ item, onClick, itemList, handleLuma, luma, setError, error }
   const heroLumaAnimatedRender = `https://temtem-api.mael.tech${item.renderAnimatedLumaImage}`
 
   return (
-    <div className='flex justify-center items-center gap-20 mt-20'>
+    <div className='flex justify-center items-center mt-20'>
       <LeftControl
         onClick={onClick}
         setError={setError}
         number={item.number}
         size={70}
       />
-
+    <div className='flex justify-center items-center w-3/4 gap-20 h-[65vh]'>
       <div className='flex flex-col justify-center items-center border-4 rounded-lg p-4 border-fuchsia-900 -skew-y-6 shadow-[-15px_15px_20px_rgba(0,0,0,0.15)] shadow-gray-700 row-span-1 col-start-2 col-end-3'>
           <HeroHeader 
             name={item.name}
@@ -127,7 +127,7 @@ const HeroInfo = ({ item, onClick, itemList, handleLuma, luma, setError, error }
         setError={setError}
         image={!luma ? heroAnimatedRender : heroLumaAnimatedRender}
       />
-
+    </div>
       <RightControl
         onClick={onClick}
         setError={setError}
